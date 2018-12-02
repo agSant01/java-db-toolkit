@@ -7,25 +7,36 @@ import java.util.ArrayList;
 
 import db.utils.Column;
 
+/**
+ * Abstract class used to convert any Java Model to a DB exportable object. 
+ * 
+ * @author Gabriel S. Santiago
+ * @date Dec 1, 2018
+ *
+ */
 public abstract class Relational {
-	private ArrayList<Column<?>> values = null;
 	
-	public Relational() {}
-	
+	/**
+	 * @return the tableName
+	 */
 	public abstract String getTableName();
 	
-	public ArrayList<Column<?>> getSchema() {
-		if (this.values != null) {
-			return this.values;
-		}
-		
-		this.values = new ArrayList<>();
+	/**
+	 * Returns a collection of Columns, the Row representation of the object for a Database
+	 *
+	 * @author Gabriel S. Santiago
+	 * @date Dec 1, 2018
+	 * @return
+	 */
+	public ArrayList<Column<?>> getParsedSchema() {
+		ArrayList<Column<?>> values = new ArrayList<>();
 		
 		for (Method method : this.getClass().getDeclaredMethods()) {
 		    if (Modifier.isPublic(method.getModifiers())
 		        && method.getParameterTypes().length == 0
 		        && method.getReturnType() != void.class
-		        && (method.getName().startsWith("get"))
+		        && method.getName().startsWith("get")
+		        && !method.getName().contains("TableName")
 		    ) {
 		        Object value;
 				try {
@@ -37,6 +48,8 @@ public abstract class Relational {
 				}
 		    }
 		}
+		values.sort(Column.descendingColumnName());
+		
 		return values;
 	}
 }
