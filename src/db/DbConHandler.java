@@ -292,6 +292,6 @@ public class DbConHandler {
 		}
 		
 		// format string
-		return String.format("INSTER INTO %s(%s) VALUES('%s')", object.getTableName(), String.join(", ", columnNames), String.join(", ", values));
+		return String.format("INSTER INTO %s(%s) VALUES(%s)", object.getTableName(), String.join(", ", columnNames), String.join(", ", values));
 	}
 }

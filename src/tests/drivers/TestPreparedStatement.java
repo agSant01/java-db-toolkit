@@ -570,7 +570,10 @@ public class TestPreparedStatement extends Debuger implements PreparedStatement 
 		info("Query executed");
 		
 		for (Object o : this.params.values())
-			this.query = this.query.replaceFirst("\\?", o.toString());
+			if (o instanceof String)
+				this.query = this.query.replaceFirst("\\?", "'" + o.toString() + "'");
+			else
+				this.query = this.query.replaceFirst("\\?", o.toString());
 	
 		lastExecutedQuery = query;
 		setLastMethodExecuted();

@@ -53,7 +53,7 @@ public class Test extends Debuger {
 		TestPreparedStatement pstmt = this.driver.getPstmt();
 
 		assertTrue("Last Method call was not prepareStatement()", this.driver.getLastMethodExecuted().equals("prepareStatement()"));
-		assertTrue("Bad insertion query for " + object, pstmt.getLastQuery().equals("INSTER INTO MyTable(Last, Middle, Name) VALUES('Santiago, Salvador, Gabriel')"));
+		assertTrue("Bad insertion query for " + object, pstmt.getLastQuery().equals("INSTER INTO MyTable(Last, Middle, Name) VALUES('Santiago', 'Salvador', 'Gabriel')"));
 		isClosed(pstmt);
 	}
 
