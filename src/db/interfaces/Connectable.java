@@ -81,42 +81,42 @@ public abstract class Connectable {
 	/**
 	 * @return the default length for any String object
 	 */
-	public String getDefaultVarcharLength() {
+	public final String getDefaultVarcharLength() {
 		return Integer.toString(this.defaultVarcharLength);
 	}
 
 	/**
 	 * @return the host
 	 */
-	public String getHost() {
+	public final String getHost() {
 		return host;
 	}
 	
 	/**
 	 * @return the user
 	 */
-	public String getUser() {
+	public final String getUser() {
 		return user;
 	}
 
 	/**
 	 * @return the user
 	 */
-	public String getPassword() {
+	public final String getPassword() {
 		return password;
 	}
 
 	/**
 	 * @return the user
 	 */
-	public String getDatabase() {
+	public final String getDatabase() {
 		return database;
 	}
 
 	/**
 	 * @return the user
 	 */
-	public void setDefaultVarcharLength(int length) {
+	public final void setDefaultVarcharLength(int length) {
 		this.defaultVarcharLength = length;
 	}
 	
@@ -131,7 +131,7 @@ public abstract class Connectable {
 	 * @param allowNulls
 	 * @return
 	 */
-	public String getCreateTableStatement(String tableName, ArrayList<Column<?>> columns, boolean allowNulls) {
+	public final String getCreateTableStatement(String tableName, ArrayList<Column<?>> columns, boolean allowNulls) {
 		String createTableQuery = String.format(this.getCreateTableQuery(), tableName);
 		
 		ArrayList<String> createColumnsQueryParts = new ArrayList<>();
@@ -161,7 +161,7 @@ public abstract class Connectable {
 	 * @param cls
 	 * @return
 	 */
-	protected String getColumnTypeAsString(Class<?> cls) {
+	protected final String getColumnTypeAsString(Class<?> cls) {
 		if (cls == int.class) {
 			return this.getIntegerKeyword();
 		} else if (cls == double.class) {
@@ -181,7 +181,7 @@ public abstract class Connectable {
 	 * @param allowNulls
 	 * @return
 	 */
-	protected static String allowNulls(boolean allowNulls) {
+	protected final static String allowNulls(boolean allowNulls) {
 		if (allowNulls == true) {
 			return "Null";
 		} else {

@@ -53,7 +53,7 @@ public class Test extends Debuger {
 		TestPreparedStatement pstmt = this.driver.getPstmt();
 
 		assertTrue("Last Method call was not prepareStatement()", this.driver.getLastMethodExecuted().equals("prepareStatement()"));
-		assertTrue("Bad insertion query for " + object, pstmt.getLastQuery().equals("INSTER INTO MyTable(Last, Middle, Name) VALUES('Santiago', 'Salvador', 'Gabriel')"));
+		assertTrue("Bad insertion query for " + object, pstmt.getLastQuery().equals("INSTER INTO MyObject(Last, Middle, Name) VALUES('Santiago', 'Salvador', 'Gabriel')"));
 		isClosed(pstmt);
 	}
 
@@ -63,8 +63,8 @@ public class Test extends Debuger {
 		info("");
 		this.db.initTables(MyObject.class);
 		TestStatement stmt = this.driver.getStmt();
-
-		assertTrue("Invalid create table query", stmt.getLastQuery().equals("Create Table If Not Exists MyTable (Last Varchar(40) Not Null, Middle Varchar(40) Not Null, Name Varchar(40) Not Null);"));
+		
+		assertTrue("Invalid create table query", stmt.getLastQuery().equals("Create Table If Not Exists MyObject (Last Varchar(40) Not Null, Middle Varchar(40) Not Null, Name Varchar(40) Not Null);"));
 		isClosed(stmt);
 	}
 
@@ -74,7 +74,7 @@ public class Test extends Debuger {
 		info("");
 		this.db.initTables(MyObject.class, MyObject2.class);
 		TestStatement stmt = this.driver.getStmt();
-
+		
 		assertTrue("Invalid create table query", stmt.getLastBatch().equals(
 				new ArrayList<String>() {/**
 				 * 
@@ -82,8 +82,8 @@ public class Test extends Debuger {
 					private static final long serialVersionUID = 1L;
 
 					{
-						add("Create Table If Not Exists MyTable (Last Varchar(40) Not Null, Middle Varchar(40) Not Null, Name Varchar(40) Not Null);");
-						add("Create Table If Not Exists MyTable (Last2 Varchar(40) Not Null, Middle2 Varchar(40) Not Null, Name2 Varchar(40) Not Null);");
+						add("Create Table If Not Exists MyObject (Last Varchar(40) Not Null, Middle Varchar(40) Not Null, Name Varchar(40) Not Null);");
+						add("Create Table If Not Exists MyObject2 (Last2 Varchar(40) Not Null, Middle2 Varchar(40) Not Null, Name2 Varchar(40) Not Null);");
 					}}
 				)
 				);

@@ -8,18 +8,13 @@ public class MyObject extends Relational {
 	private String last;
 	
 	public MyObject() {}
-
+	
 	public MyObject(String name, String middle, String last) {
 		this.name = name;
 		this.middle = middle;
 		this.last = last;
 	}
-
-	@Override
-	public String getTableName() {
-		return "MyTable";
-	}
-
+	
 	public String getName() {
 		return name;
 	}

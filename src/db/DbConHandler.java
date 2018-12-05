@@ -256,7 +256,7 @@ public class DbConHandler {
 	 * @param schema
 	 * @throws SQLException
 	 */
-	private static void setStatemtentData(PreparedStatement stmt, ArrayList<Column<?>> schema) throws SQLException {
+	private final static void setStatemtentData(PreparedStatement stmt, ArrayList<Column<?>> schema) throws SQLException {
 		for (int position = 1; position <= schema.size(); position++) {
 			Column<?> column = schema.get(position-1);
 			if (column.getType() == int.class) {
@@ -279,7 +279,7 @@ public class DbConHandler {
 	 * @param object
 	 * @return
 	 */
-	private static String getRelationalInsertQuery(Relational object) {
+	private final static String getRelationalInsertQuery(Relational object) {
 		// amount of values
 		List<String> values = new LinkedList<>();
 		// list of the names of the columns

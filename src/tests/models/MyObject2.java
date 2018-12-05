@@ -12,12 +12,7 @@ public class MyObject2 extends Relational {
 		this.middle2= "f";
 		this.last2 = "d";
 	}
-
-	@Override
-	public String getTableName() {
-		return "MyTable";
-	}
-
+	
 	public String getName2() {
 		return name2;
 	}

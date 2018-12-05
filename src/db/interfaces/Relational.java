@@ -19,7 +19,9 @@ public abstract class Relational {
 	/**
 	 * @return the tableName
 	 */
-	public abstract String getTableName();
+	public String getTableName() {
+		return this.getClass().getSimpleName();
+	}
 	
 	/**
 	 * Returns a collection of Columns, the Row representation of the object for a Database
@@ -28,7 +30,7 @@ public abstract class Relational {
 	 * @date Dec 1, 2018
 	 * @return
 	 */
-	public ArrayList<Column<?>> getParsedSchema() {
+	public final ArrayList<Column<?>> getParsedSchema() {
 		ArrayList<Column<?>> values = new ArrayList<>();
 		
 		for (Method method : this.getClass().getDeclaredMethods()) {
