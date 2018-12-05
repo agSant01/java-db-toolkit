@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -265,6 +266,8 @@ public class DbConHandler {
 				stmt.setDouble(position, (double) column.getValue());	
 			} else if (column.getType() == boolean.class) {
 				stmt.setBoolean(position, (boolean) column.getValue());	
+			} else if (column.getType() == Date.class) {
+				stmt.setDate(position, (Date) column.getValue());	
 			} else {
 				stmt.setString(position, column.getValue().toString());				
 			}

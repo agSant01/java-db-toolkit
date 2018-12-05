@@ -60,6 +60,16 @@ public class MySQL extends Connectable {
 	}
 
 	/* (non-Javadoc)
+	 * @see db.interfaces.Connectable#getTimeStampKeyword()
+	 * @date Dec 4, 2018
+	 * @author Gabriel S. Santiago
+	 */
+	@Override
+	public String getTimeStampKeyword() {
+		return "Timestamp";
+	}
+
+	/* (non-Javadoc)
 	 * @see db.interfaces.Connectable#getCreateTableQuery()
 	 * @date Dec 1, 2018
 	 * @author Gabriel S. Santiago

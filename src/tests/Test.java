@@ -12,6 +12,7 @@ import tests.drivers.TestConnection;
 import tests.drivers.TestPreparedStatement;
 import tests.drivers.TestStatement;
 import tests.engines.MySQLTest;
+import tests.models.DateModel;
 import tests.models.MyObject;
 import tests.models.MyObject2;
 import tests.utils.Debuger;
@@ -65,6 +66,19 @@ public class Test extends Debuger {
 		TestStatement stmt = this.driver.getStmt();
 		
 		assertTrue("Invalid create table query", stmt.getLastQuery().equals("Create Table If Not Exists MyObject (Last Varchar(40) Not Null, Middle Varchar(40) Not Null, Name Varchar(40) Not Null);"));
+		isClosed(stmt);
+	}
+	
+	@org.junit.Test
+	public void testDateTableInit() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, SQLException {
+		newLine();
+		info("");
+		this.db.initTables(DateModel.class);
+		TestStatement stmt = this.driver.getStmt();
+		
+		info(stmt.getLastQuery());
+		
+		assertTrue("Invalid create table query", stmt.getLastQuery().equals("Create Table If Not Exists DateModel (MyDate Timestamp Not Null);"));
 		isClosed(stmt);
 	}
 

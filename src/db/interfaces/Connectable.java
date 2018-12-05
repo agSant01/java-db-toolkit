@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import db.utils.Column;
 
@@ -18,7 +19,7 @@ public abstract class Connectable {
 	private String user;
 	private String password;
 	private String database;
-	
+
 	// default length for any String object
 	private int defaultVarcharLength = 40;
 
@@ -37,12 +38,12 @@ public abstract class Connectable {
 		this.password = password;
 		this.database = database;
 	}
- 
+
 	/**
 	 * @return the connection string
 	 */
 	public abstract String getConnectionString();
-	
+
 	/**
 	 * Returns the SQL connection object
 	 *
@@ -52,7 +53,7 @@ public abstract class Connectable {
 	public Connection getNewConnection() throws SQLException {
 		return DriverManager.getConnection(this.getConnectionString());
 	};
-	
+
 	/**
 	 * @return the integer keyword for the engine
 	 */
@@ -67,6 +68,11 @@ public abstract class Connectable {
 	 * @return the boolean keyword for the engine
 	 */
 	public abstract String getBooleanKeyword();
+
+	/**
+	 * @return the timestamp keyword for the engine
+	 */
+	public abstract String getTimeStampKeyword();
 
 	/**
 	 * @return the create table default statement for the engine
@@ -91,7 +97,7 @@ public abstract class Connectable {
 	public final String getHost() {
 		return host;
 	}
-	
+
 	/**
 	 * @return the user
 	 */
@@ -119,8 +125,8 @@ public abstract class Connectable {
 	public final void setDefaultVarcharLength(int length) {
 		this.defaultVarcharLength = length;
 	}
-	
-	
+
+
 	/**
 	 * Generate the create statement for the creation of a table in a Database based on the model object getter definitions.
 	 *
@@ -133,23 +139,23 @@ public abstract class Connectable {
 	 */
 	public final String getCreateTableStatement(String tableName, ArrayList<Column<?>> columns, boolean allowNulls) {
 		String createTableQuery = String.format(this.getCreateTableQuery(), tableName);
-		
+
 		ArrayList<String> createColumnsQueryParts = new ArrayList<>();
-		
+
 		for (Column<?> column : columns) {
 			String str = String.format(
 					this.getCreateColumnsQuery(), 
 					column.getColumnName(),
 					this.getColumnTypeAsString(column.getType()),
 					allowNulls(allowNulls)
-			);
+					);
 			createColumnsQueryParts.add(str);
 		}
-		
+
 		String createColumnsQuery = String.join(", ", createColumnsQueryParts);
-		
+
 		createTableQuery += createColumnsQuery + ");";
-		
+
 		return createTableQuery;
 	}
 
@@ -168,11 +174,13 @@ public abstract class Connectable {
 			return this.getIntegerKeyword();
 		} else if(cls == boolean.class) {
 			return this.getBooleanKeyword();
-		}  else {
+		} else if (cls == Date.class){ 
+			return this.getTimeStampKeyword();
+		}else {
 			return getVarcharKeyword() + "(" + this.getDefaultVarcharLength() + ")";
 		}
 	}
-	
+
 	/**
 	 * Gets the String representation for allowing NULLS in the table the columns
 	 *
@@ -188,7 +196,7 @@ public abstract class Connectable {
 			return "Not Null";
 		}
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 * @date Dec 1, 2018
@@ -215,17 +223,17 @@ public abstract class Connectable {
 				+ "},"
 				+ "'ConnectionString': '%s'"
 				+ "}",
-					this.getHost(),
-					this.getUser(),
-					this.getPassword(),
-					this.getDatabase(),
-					this.getIntegerKeyword(),
-					this.getVarcharKeyword(),
-					this.getDefaultVarcharLength(),
-					this.getBooleanKeyword(),
-					this.getCreateTableQuery(),
-					this.getCreateColumnsQuery(),
-					this.getConnectionString()
+				this.getHost(),
+				this.getUser(),
+				this.getPassword(),
+				this.getDatabase(),
+				this.getIntegerKeyword(),
+				this.getVarcharKeyword(),
+				this.getDefaultVarcharLength(),
+				this.getBooleanKeyword(),
+				this.getCreateTableQuery(),
+				this.getCreateColumnsQuery(),
+				this.getConnectionString()
 				);
 	}
 }
